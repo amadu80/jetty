@@ -38,9 +38,9 @@ end
 
 ################################################################################
 # Set node attributes
-
-node.set['jetty']['download']  = "#{node['jetty']['directory']}/jetty-distribution-#{node['jetty']['version']}.tar.gz"
-node.set['jetty']['extracted'] = "#{node['jetty']['directory']}/jetty-distribution-#{node['jetty']['version']}"
+matchdata = node['jetty']['link'].match /(\w[\w\-_\d]*#{node['jetty']['version']})\.tar.gz/
+node.set['jetty']['download']  = "#{node['jetty']['directory']}/#{matchdata[1]}.tar.gz"
+node.set['jetty']['extracted'] = "#{node['jetty']['directory']}/#{matchdata[1]}"
 node.set['jetty']['args'] =  (node['jetty']['args'] + ["-Djetty.port=#{node['jetty']['port']}", "-Djetty.logs=#{node['jetty']['logs']}"]).uniq
 
 ################################################################################
